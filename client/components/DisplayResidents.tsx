@@ -1,30 +1,25 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useCallback } from 'react'
 import { Resident } from '../types/index'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppState } from '../store/store'
 import * as actions from '../actions/index'
+import DisplayResident from './DisplayResident'
 
 const DisplayResidents: FunctionComponent = () => {
     const dispatch = useDispatch()
+    const dispatchDeleteToStore = useCallback(payload => dispatch(actions.deleteResident(payload)), [dispatch])
+    const dispatchUpdateToStore = useCallback(payload => dispatch(actions.updateResidentPhase(payload)), [dispatch])
     const residents: Resident[] = useSelector((state: AppState) => state.residents)
 
     return (
         <>
-            {residents.map(resident => {
-                return (
-                    <div key={resident.key}>
-                        <p>{resident.name} &nbsp;&nbsp;&nbsp; Phase: {resident.phase}</p>
-                        {resident.phase === 'senior' ?
-                        <button onClick={() => {dispatch(actions.deleteResident(resident.key))}}>Delete Resident</button>  
-                        : null
-                        }
-                        {resident.phase === 'junior' ? 
-                        <button onClick={() => {dispatch(actions.updateResidentPhase(resident.key))}}>Update Phase</button>
-                        : null
-                        }
-                    </div>
-                )
-            })}
+            {residents.map(resident =>  
+                <DisplayResident 
+                key={resident.key}
+                resident={resident}
+                dispatchDeleteToStore={dispatchDeleteToStore}
+                dispatchUpdateToStore={dispatchUpdateToStore}/>
+            )}
         </>
     )
 }

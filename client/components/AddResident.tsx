@@ -10,11 +10,13 @@ const AddResident:FunctionComponent = () => {
 
     const handleNewResidentSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        newResidentName.length > 0 ?
         dispatch(actions.addResident({
             name: newResidentName,
             phase: 'junior',
             key: key++
         }))
+        : null
         setNewResidentName('')
     }
 

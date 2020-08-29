@@ -32,7 +32,7 @@ const trevor: Resident = {
 }
 const initialState = {
     residents: [julia, mike, shannon, sina, trevor],
-    helloWorld: "Hellow World"
+    helloWorld: "Hello World"
 }
 
 export type AppState = ReturnType<typeof rootReducer>
