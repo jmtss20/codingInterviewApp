@@ -1,22 +1,21 @@
 
-import * as React from 'react';
+import * as React from 'react'
+import HelloWorld from './components/HelloWorld'
+import AddResident from './components/AddResident'
+import DisplayResidents from './components/DisplayResidents'
 
-interface Props {
-   name:
-    string
-}
 
-class App extends React.Component<Props> {
-  render() {
-    const { name } = this.props;
+
+
+const App = () => {
+
     return (
-      <>
-        <h1>
-          Hello {name}
-        </h1>
-      </>
-    );
-  }
+      <div>
+        <HelloWorld />
+        <DisplayResidents />
+        <AddResident />
+      </div>
+    )
 }
 
-export default App;
+export default App
