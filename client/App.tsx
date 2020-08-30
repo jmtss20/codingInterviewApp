@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from './store/index'
+import { AppState } from './index'
 import { addToHelloWorld } from './actions/index'
 
 const App = () => {
