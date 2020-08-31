@@ -7,8 +7,8 @@ let socket: SocketIOClient.Socket
 
 const Socket:FunctionComponent = () => {
     const [response, setResponse] = useState('')
-    const [roomNumber, setRoomNumber] = useState(0)
-    const [generatedRoomNumber, setGeneratedRoomNumber] = useState(NaN)
+    const [roomNumber, setRoomNumber] = useState('')
+    const [generatedRoomNumber, setGeneratedRoomNumber] = useState('')
 
     useEffect(() => {
          socket = socketIOClient(ENDPOINT);
@@ -26,17 +26,18 @@ const Socket:FunctionComponent = () => {
 
     const generateRoom = () => {
         let randomRoomNumber = Math.floor(Math.random() * 100000)
-        setGeneratedRoomNumber(randomRoomNumber)
+        setGeneratedRoomNumber(randomRoomNumber.toString())
         socket.emit('enter-Room', randomRoomNumber)
     }
 
     const handleEnterRoomChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setRoomNumber(Number(e.target.value))
+        setRoomNumber((e.target.value))
     }
     
-    const enterRoom = (e: FormEvent<HTMLFormElement>) => {
+    const enterRoomNumberToJoin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         socket.emit('enter-Room', roomNumber)
+        setRoomNumber('')
     }
 
     return (
@@ -46,16 +47,17 @@ const Socket:FunctionComponent = () => {
         </p>
         <button onClick={() => {startTimer()}}>Start Timer</button>
         <button onClick={generateRoom}>Generate Room</button>
-        <form onSubmit={enterRoom}>
+        <form onSubmit={enterRoomNumberToJoin}>
             <label>
                 Enter Room #
                 <input type="text" name="name" value={roomNumber} onChange={(e: ChangeEvent<HTMLInputElement>):void => handleEnterRoomChange(e)}/>
             </label>
         <input type="submit" value="Submit" />
         </form>
-        {isNaN(generatedRoomNumber) ? null : 
-        <p>Your Room Number is {generatedRoomNumber}</p>
+        {generatedRoomNumber ? <p>Your Room Number is {generatedRoomNumber}</p>
+        : null
         }
+        
         </>
     )
 }
