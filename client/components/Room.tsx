@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Canvas } from './Canvas';
 
 interface Props {
   socketSendMessage: (message: string) => void,
+  socketSendCanvasUpdate: (message: string) => void,
   room: string,
-  globalText: string
+  globalText: string,
+  globalContextData: string
 }
 
-export const Room: React.FC<Props> = ({ socketSendMessage, room, globalText }) => {
+export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, room, globalText, globalContextData }) => {
   const [text, setText] = useState<string>('');
 
   useEffect(() => {
@@ -20,6 +23,7 @@ export const Room: React.FC<Props> = ({ socketSendMessage, room, globalText }) =
         <textarea value={text} onChange={(e) => setText(e.target.value)}></textarea>
       </form>
       <textarea value={globalText}></textarea>
+      <Canvas globalContextData={globalContextData} socketSendCanvasUpdate={socketSendCanvasUpdate}/>
     </>
   );
 }
