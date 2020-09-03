@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 {/* @ts-ignore  */ }
 import randomWords from 'random-words';
 import axios from 'axios';

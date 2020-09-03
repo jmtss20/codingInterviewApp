@@ -1,6 +1,11 @@
-import { AppActions } from '../types/actions'
+import { AppActions } from '../types/actions';
 
-export const addToHelloWorld = (newString: string): AppActions => ({
-    type: "ADD_TO_HELLO_WORLD",
-    payload: newString
-})
+export const setGlobalText = (text: string): AppActions => ({
+  type: 'SET_GLOBAL_TEXT',
+  payload: text,
+});
+
+export const setGlobalContextData = (url: string): AppActions => ({
+    type: 'SET_GLOBAL_CONTEXT_DATA',
+    payload: url,
+  });

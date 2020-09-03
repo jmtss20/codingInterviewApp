@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { AppState } from '../types';
 
 type Coordinates = {
   x: number;
@@ -6,25 +8,25 @@ type Coordinates = {
 };
 
 interface Props {
-  globalContextData: string | null,
-  socketSendCanvasUpdate: (val: any) => void
+  socketSendCanvasUpdate: (val: any) => void;
 }
 
-export const Canvas: React.FC<Props> = ({globalContextData, socketSendCanvasUpdate}) => {
+export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
+  const globalContextData: string = useSelector((state: AppState) => state.globalContextData);
 
   useEffect(() => {
     if (context) {
       context.beginPath();
-      let img=new Image();
+      let img = new Image();
       if (globalContextData && globalContextData.length) {
         img.src = globalContextData;
       }
-      img.onload = () => context.drawImage(img,0,0);
+      img.onload = () => context.drawImage(img, 0, 0);
       context.closePath();
     }
-  },[globalContextData])
+  }, [globalContextData]);
 
   useEffect(() => {
     let mouseDown: boolean = false;
@@ -66,7 +68,6 @@ export const Canvas: React.FC<Props> = ({globalContextData, socketSendCanvasUpda
           y: evt.clientY - canvasOffsetTop,
         };
 
-        // Draw our path
         context.beginPath();
         context.moveTo(start.x, start.y);
         context.lineTo(end.x, end.y);
@@ -75,7 +76,6 @@ export const Canvas: React.FC<Props> = ({globalContextData, socketSendCanvasUpda
         context.stroke();
         context.closePath();
       }
-
     }
 
     if (canvasRef.current) {
@@ -99,21 +99,20 @@ export const Canvas: React.FC<Props> = ({globalContextData, socketSendCanvasUpda
         canvasRef.current.removeEventListener('mouseup', handleMouseUp);
         canvasRef.current.removeEventListener('mousemove', handleMouseMove);
       }
-    }
+    };
   }, [context]);
 
   return (
     <div style={{ textAlign: 'center' }}>
       <canvas
-        id="canvas"
+        id='canvas'
         ref={canvasRef}
         width={500}
         height={500}
         style={{
           border: '2px solid #000',
           marginTop: 10,
-        }}>
-      </canvas>
+        }}></canvas>
     </div>
-  )
-}
+  );
+};

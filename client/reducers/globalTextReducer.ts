@@ -1,12 +1,12 @@
 import { AppActions } from '../types/actions';
 
-const helloWorldReducer = (state = '', action: AppActions): string => {
+const globalTextReducer = (state = '', action: AppActions): string => {
   switch (action.type) {
-    case 'ADD_TO_HELLO_WORLD':
+    case 'SET_GLOBAL_TEXT':
       return action.payload;
     default:
       return state;
   }
 };
 
-export default helloWorldReducer;
+export default globalTextReducer;

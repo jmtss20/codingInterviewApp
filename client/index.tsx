@@ -9,10 +9,13 @@ import rootReducer from './reducers'
 import { AppActions } from './types/actions'
 import { AppState } from './types'
 
-import App from './App';
+import { App } from './App';
 import "./styles.scss";
 
-const initialState = { helloWorld: "Hello World" }
+const initialState = {
+    globalText: '',
+    globalContextData: '',
+}
 
 const store = createStore(
     rootReducer,
