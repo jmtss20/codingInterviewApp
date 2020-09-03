@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { AppState } from './index'
+import { addToHelloWorld } from './actions/index'
+
 import { Room } from './components/Room';
 import { Main } from './components/Main';
 
@@ -7,6 +11,9 @@ const ENDPOINT = 'http://127.0.0.1:80';
 const socket = socketIOClient(ENDPOINT);
 
 const App: React.FC = () => {
+  const helloWorld: string = useSelector((state: AppState) => state.helloWorld)
+  const dispatch = useDispatch()
+
   const [view, setView] = useState<string>('main');
   const [room, setRoom] = useState<string>('');
   const [globalText, setGlobalText] = useState<string>('');
@@ -46,6 +53,9 @@ const App: React.FC = () => {
 
   return (
     <>
+      <h1>{helloWorld}</h1>
+      <button onClick={() => {dispatch(addToHelloWorld(`${helloWorld}!`))}}>Add "!"</button>
+
       {!!(view === 'main') && <Main setView={setView} assignRoom={setRoom} />}
       {!!(view === 'room') && <Room
           socketSendMessage={socketSendMessage}
