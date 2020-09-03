@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { AppState } from './index'
-import { addToHelloWorld } from './actions/index'
+import { AppState } from './types'
+import { addToHelloWorld } from './actions'
 
 import { Room } from './components/Room';
 import { Main } from './components/Main';
@@ -54,16 +54,16 @@ const App: React.FC = () => {
   return (
     <>
       <h1>{helloWorld}</h1>
-      <button onClick={() => {dispatch(addToHelloWorld(`${helloWorld}!`))}}>Add "!"</button>
+      <button onClick={() => { dispatch(addToHelloWorld(`${helloWorld}!`)) }}>Add "!"</button>
 
       {!!(view === 'main') && <Main setView={setView} assignRoom={setRoom} />}
       {!!(view === 'room') && <Room
-          socketSendMessage={socketSendMessage}
-          socketSendCanvasUpdate={socketSendCanvasUpdate}
-          room={room}
-          globalText={globalText}
-          globalContextData={globalContextData}
-        />}
+        socketSendMessage={socketSendMessage}
+        socketSendCanvasUpdate={socketSendCanvasUpdate}
+        room={room}
+        globalText={globalText}
+        globalContextData={globalContextData}
+      />}
     </>
   );
 }

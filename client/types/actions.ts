@@ -1,14 +1,13 @@
-import * as actions from './actionStrings'
-import { Person } from './index'
+import { Person } from './index';
 
 interface HelloWorldAction {
-    type: typeof actions.addToHelloWorld
-    newString: string
+  type: 'ADD_TO_HELLO_WORLD';
+  payload: string;
 }
 
 interface AddPersonAction {
-    type: typeof actions.addPerson
-    name: Person
+  type: 'SET_NAMES';
+  payload: Person;
 }
 
-export type AppActions = HelloWorldAction | AddPersonAction
+export type AppActions = HelloWorldAction | AddPersonAction;

@@ -1,14 +1,12 @@
-import { AppActions } from '../types/actions'
-import * as actions from '../types/actionStrings'
+import { AppActions } from '../types/actions';
 
-const helloWorldReducer = (state = "", action: AppActions): string => {
-    switch (action.type) {
-        case actions.addToHelloWorld:
-            return action.newString
-        
-        default:
-            return state
-    }
-}
+const helloWorldReducer = (state = '', action: AppActions): string => {
+  switch (action.type) {
+    case 'ADD_TO_HELLO_WORLD':
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
-export default helloWorldReducer
+export default helloWorldReducer;

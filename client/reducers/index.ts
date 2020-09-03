@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
-import helloWorldReducer from './helloWorldReducer'
+import { combineReducers } from 'redux';
+import helloWorldReducer from './helloWorldReducer';
 
 const rootReducer = combineReducers({
-    helloWorld: helloWorldReducer
-})
+  helloWorld: helloWorldReducer,
+});
 
-export default rootReducer
+export default rootReducer;
