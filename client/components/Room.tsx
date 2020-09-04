@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from '../types';
 import { Canvas } from './Canvas';
+import { CodeEditor } from '../components/CodeEditor';
 
 interface Props {
   socketSendMessage: (message: string) => void;
@@ -21,9 +22,21 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
     <>
       <h3>ROOM: {room}</h3>
       <form id='send-container'>
-        <textarea value={text} onChange={(e) => setText(e.target.value)}></textarea>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          style={{
+            width: '50vw',
+            height: '10vh',
+          }}></textarea>
       </form>
-      <textarea value={globalText}></textarea>
+      <textarea
+        value={globalText}
+        style={{
+          width: '50vw',
+          height: '10vh',
+        }}></textarea>
+      <CodeEditor />
       <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
     </>
   );
