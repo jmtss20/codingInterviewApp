@@ -7,16 +7,21 @@ import { CodeEditor } from '../components/CodeEditor';
 interface Props {
   socketSendMessage: (message: string) => void;
   socketSendCanvasUpdate: (message: string) => void;
+  socketSendCodeUpdate: (data: any) => void;
   room: string;
 }
 
-export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, room }) => {
+export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, socketSendCodeUpdate, room }) => {
   const globalText: string = useSelector((state: AppState) => state.globalText);
   const [text, setText] = useState<string>('');
+  const handleTextChange = (e: any) => {
+    setText(e.target.value);
+    socketSendMessage(e.target.value);
+  };
 
   useEffect(() => {
-    socketSendMessage(text);
-  }, [text]);
+    setText(globalText);
+  }, [globalText]);
 
   return (
     <>
@@ -24,19 +29,13 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
       <form id='send-container'>
         <textarea
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleTextChange}
           style={{
             width: '50vw',
-            height: '10vh',
+            height: '25vh',
           }}></textarea>
       </form>
-      <textarea
-        value={globalText}
-        style={{
-          width: '50vw',
-          height: '10vh',
-        }}></textarea>
-      <CodeEditor />
+      <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
       <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
     </>
   );

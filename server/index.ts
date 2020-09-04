@@ -34,6 +34,10 @@ io.on('connection', (socket) => {
     socket.to(room).broadcast.emit('canvas-update', url);
   })
 
+  socket.on('send-code-update', (room, data) => {
+    socket.to(room).broadcast.emit('code-update', data);
+  })
+
   socket.on('disconnect', () => {
     // future disconnecting logic
     console.log(`Client ${socket.id} left`)
