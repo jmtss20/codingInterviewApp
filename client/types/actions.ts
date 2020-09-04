@@ -1,9 +1,4 @@
-import { Person } from './index';
-
-interface AddPersonAction {
-  type: 'SET_NAMES';
-  payload: Person;
-}
+import { CodeEditor } from './index';
 
 interface GlobalTextAction {
   type: 'SET_GLOBAL_TEXT';
@@ -15,4 +10,9 @@ interface GlobalContextDataAction {
   payload: string;
 }
 
-export type AppActions = AddPersonAction | GlobalTextAction | GlobalContextDataAction;
+interface CodeEditorData {
+  type: 'SET_CODE_EDITOR_DATA';
+  payload: CodeEditor;
+}
+
+export type AppActions = GlobalTextAction | GlobalContextDataAction | CodeEditorData;
