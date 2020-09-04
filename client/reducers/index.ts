@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux'
-import helloWorldReducer from './helloWorldReducer'
+import { combineReducers } from 'redux';
+import globalTextReducer from './globalTextReducer';
+import globalContextDataReducer from './globalContextDataReducer';
 
 const rootReducer = combineReducers({
-    helloWorld: helloWorldReducer
-})
+  globalText: globalTextReducer,
+  globalContextData: globalContextDataReducer
+});
 
-export default rootReducer
+export default rootReducer;

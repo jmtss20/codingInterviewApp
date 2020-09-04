@@ -1,14 +1,18 @@
-import * as actions from './actionStrings'
-import { Person } from './index'
-
-interface HelloWorldAction {
-    type: typeof actions.addToHelloWorld
-    newString: string
-}
+import { Person } from './index';
 
 interface AddPersonAction {
-    type: typeof actions.addPerson
-    name: Person
+  type: 'SET_NAMES';
+  payload: Person;
 }
 
-export type AppActions = HelloWorldAction | AddPersonAction
+interface GlobalTextAction {
+  type: 'SET_GLOBAL_TEXT';
+  payload: string;
+}
+
+interface GlobalContextDataAction {
+  type: 'SET_GLOBAL_CONTEXT_DATA';
+  payload: string;
+}
+
+export type AppActions = AddPersonAction | GlobalTextAction | GlobalContextDataAction;
