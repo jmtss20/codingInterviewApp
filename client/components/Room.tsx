@@ -26,17 +26,11 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
 
   return (
     <>
-      <h3>ROOM: {room}</h3>
+      <div className='HeaderContainer'>
+        <h3>ROOM: {room}</h3>
+      </div>
       <Prompt />
-      <form id='send-container'>
-        <textarea
-          value={text}
-          onChange={handleTextChange}
-          style={{
-            width: '50vw',
-            height: '25vh',
-          }}></textarea>
-      </form>
+      <textarea className='TextEditor' value={text} onChange={handleTextChange}></textarea>
       <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
       <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
     </>

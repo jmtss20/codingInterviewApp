@@ -9,6 +9,7 @@ interface Props {
 
 export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
   const codeEditorData: any = useSelector((state: AppState) => state.codeEditorData);
+  const [dimensions, setDimensions] = useState<{ [key: string]: any }>({ width: 500, height: 300 });
   const [value, setValue] = useState('// Write code here');
   const [theme, setTheme] = useState('dark');
   const [language, setLanguage] = useState('javascript');
@@ -41,13 +42,22 @@ export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
   };
 
   useEffect(() => {
+    /* @ts-ignore  */
+    const height = document.getElementsByClassName('CodeEditor')[0].clientHeight;
+    /* @ts-ignore  */
+    const width = document.getElementsByClassName('CodeEditor')[0].clientWidth;
+    console.log(height, width);
+    setDimensions({ width, height });
+  }, [isEditorReady]);
+
+  useEffect(() => {
     if (codeEditorData.language !== language) setLanguage(codeEditorData.language);
     setValue(codeEditorData.value);
   }, [codeEditorData]);
 
   return (
     // https://www.npmjs.com/package/@monaco-editor/react for details on props
-    <>
+    <div className='CodeEditorContainer'>
       <button onClick={toggleTheme} disabled={!isEditorReady}>
         {theme} mode
       </button>
@@ -56,16 +66,18 @@ export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
           <option value={`${lng}`}>{lng}</option>
         ))}
       </select>
-      <ControlledEditor
-        height='33vh'
-        width='50vw'
-        value={value}
-        /* @ts-ignore  */
-        onChange={handleEditorChange}
-        editorDidMount={handleEditorDidMount}
-        language={language}
-        theme={theme}
-      />
-    </>
+      <div className='CodeEditor'>
+        <ControlledEditor
+          width={dimensions.width}
+          height={dimensions.height}
+          value={value}
+          /* @ts-ignore  */
+          onChange={handleEditorChange}
+          editorDidMount={handleEditorDidMount}
+          language={language}
+          theme={theme}
+        />
+      </div>
+    </div>
   );
 };

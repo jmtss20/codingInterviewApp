@@ -14,7 +14,16 @@ interface Props {
 export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
+  const [dimensions, setDimensions] = useState<{ [key: string]: any}>({width: 500, height: 300});
   const globalContextData: string = useSelector((state: AppState) => state.globalContextData);
+
+  useEffect(() => {
+    /* @ts-ignore  */
+    const height = document.getElementById('canvas').clientHeight;
+    /* @ts-ignore  */
+    const width = document.getElementById('canvas').clientWidth;
+    setDimensions({width,height})
+  }, [context]);
 
   useEffect(() => {
     if (context) {
@@ -103,13 +112,8 @@ export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
   }, [context]);
 
   return (
-    <canvas
-      id='canvas'
-      ref={canvasRef}
-      width={500}
-      height={300}
-      style={{
-        border: '2px solid #000',
-      }}></canvas>
+    <div className='CanvasContainer'>
+      <canvas id='canvas' ref={canvasRef} width={dimensions.width} height={dimensions.height}></canvas>
+    </div>
   );
 };
