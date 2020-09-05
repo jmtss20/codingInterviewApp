@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../types';
 import { Canvas } from './Canvas';
 import { CodeEditor } from '../components/CodeEditor';
+import { Prompt } from '../components/Prompt';
 
 interface Props {
   socketSendMessage: (message: string) => void;
@@ -25,16 +26,11 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
 
   return (
     <>
-      <h3>ROOM: {room}</h3>
-      <form id='send-container'>
-        <textarea
-          value={text}
-          onChange={handleTextChange}
-          style={{
-            width: '50vw',
-            height: '25vh',
-          }}></textarea>
-      </form>
+      <div className='HeaderContainer'>
+        <h3>ROOM: {room}</h3>
+      </div>
+      <Prompt />
+      <textarea className='TextEditor' value={text} onChange={handleTextChange}></textarea>
       <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
       <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
     </>

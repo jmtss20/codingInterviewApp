@@ -1,6 +1,121 @@
-$primary-color: white;
-$bg: black;
-h1 {
-  color: $primary-color;
-  background-color: $bg;
+// GLOBAL VARIABLES
+// --------------------------
+// Seperate into another file
+// --------------------------
+$dark-mode-text: #fff;
+$dark-mode-bg1: #202124;
+$dark-mode-bg2: #1e1e1e;
+$dark-mode-border: #b9b9b9;
+
+$light-mode-text: #000;
+$light-mode-bg: #fff;
+$light-mode-border: #000000;
+
+$text-color: $light-mode-text;
+$bg-color: $light-mode-bg;
+$border: .1rem solid $light-mode-border;
+
+$border-radius: .2rem;
+$padding: 1rem;
+
+body {
+  background-color: $bg-color;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $text-color;
+  background-color: $bg-color;
+  padding-bottom: $padding;
+  margin: 0;
+}
+
+p {
+  color: $text-color;
+  background-color: $bg-color;
+  margin: 0;
+}
+
+%room-component {
+  width: 30rem;
+  height: 15rem;
+  border: $border;
+  padding: $padding;
+  border-radius: $border-radius;
+}
+
+// COMPONENT SPECIFIC
+// --------------------------
+// Seperate into another file
+// --------------------------
+.AppContainer {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 2rem 1fr 1fr;
+  grid-gap: .3rem;
+}
+
+.HeaderContainer {
+  grid-row: 1;
+  grid-column: 2 / span 2;
+}
+
+.PromptContainer {
+  @extend %room-component;
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.TextEditor {
+  @extend %room-component;
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.CodeEditorContainer {
+  grid-row: 3;
+  grid-column: 3;
+  display: grid;
+  grid-template-rows: .7rem 1fr 1.5rem .5rem;
+  grid-template-columns: 1fr 5rem .5rem;
+  width: 30rem + $padding * 2;
+  height: 15rem + $padding * 2;
+  border: $border;
+  border-radius: $border-radius;
+  background-color: $bg-color;
+
+  button {
+    //! TO DELTE LATER SINCE WON'T HAVE A BUTTON
+    z-index: 10;
+    grid-row: 3;
+    grid-column: 2;
+  }
+
+  select {
+    z-index: 11;
+    grid-row: 3;
+    grid-column: 2;
+  }
+
+  .CodeEditor {
+    grid-row: 2 / span 2;
+    grid-column: 1 / span 3;
+    width: 30rem + $padding * 2;
+    height: 15rem + $padding;
+  }
+}
+
+.CanvasContainer {
+  grid-row: 3;
+  grid-column: 2;
+
+  canvas {
+    border: $border;
+    border-radius: $border-radius;
+    width: 30rem + $padding * 2;
+    height: 15rem + $padding * 2;
+  }
 }

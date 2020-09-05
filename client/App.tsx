@@ -30,7 +30,7 @@ export const App: React.FC = () => {
   }, [room]);
 
   return (
-    <>
+    <div className='AppContainer'>
       {!!(view === 'main') && <Main setView={setView} assignRoom={setRoom} />}
       {!!(view === 'room') && (
         <Room
@@ -39,6 +39,6 @@ export const App: React.FC = () => {
           socketSendCodeUpdate={socketSendCodeUpdate}
           room={room} />
       )}
-    </>
+    </div>
   );
 };
