@@ -46,7 +46,6 @@ export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
     const height = document.getElementsByClassName('CodeEditor')[0].clientHeight;
     /* @ts-ignore  */
     const width = document.getElementsByClassName('CodeEditor')[0].clientWidth;
-    console.log(height, width);
     setDimensions({ width, height });
   }, [isEditorReady]);
 

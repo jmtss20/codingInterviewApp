@@ -1,4 +1,4 @@
-import { CodeEditor } from './index';
+import { CodeEditor, Prompt } from './index';
 
 interface GlobalTextAction {
   type: 'SET_GLOBAL_TEXT';
@@ -15,4 +15,9 @@ interface CodeEditorData {
   payload: CodeEditor;
 }
 
-export type AppActions = GlobalTextAction | GlobalContextDataAction | CodeEditorData;
+interface PromptData {
+  type: 'SET_PROMPT_DATA';
+  payload: Prompt;
+}
+
+export type AppActions = GlobalTextAction | GlobalContextDataAction | CodeEditorData | PromptData;

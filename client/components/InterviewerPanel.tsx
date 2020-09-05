@@ -1,19 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { AppState } from '../types';
+import React, { useState } from 'react';
 
-export const InterviewerPanel: React.FC = () => {
-  // const codeEditorData: any = useSelector((state: AppState) => state.codeEditorData);
-  const prompt = {
-    title: 'Linked List Cycle',
-    text:
-      'Given a linked list, determine if it has a cycle in it. To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connectss to. If pos is -1, then there is no cucle in the linked list.',
+interface Props {
+  socketSendPromptUpdate: (prompt: any) => void;
+  socketToggleTimer: () => void;
+}
+
+export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, socketToggleTimer }) => {
+  const [promptTitle, setPromptTitle] = useState('');
+  const [promptText, setPromptText] = useState('');
+
+  const handlePromptChange = (e: any) => {
+    if (e.target.id === 'title') setPromptTitle(e.target.value);
+    if (e.target.id === 'text') setPromptText(e.target.value);
   };
+
+  const handlePromptRelease = (e: any) => {
+    socketSendPromptUpdate({ title: promptTitle, text: promptText });
+    socketToggleTimer();
+  }
 
   return (
     <div className='InterviewerPanelContainer'>
-      <h3>{prompt.title}</h3>
-      <p>{prompt.text}</p>
+      <textarea id='title' value={promptTitle} placeholder='Title' onChange={handlePromptChange}></textarea>
+      <textarea id='text' value={promptText} placeholder='Text' onChange={handlePromptChange}></textarea>
+      <div className='InterviewerControlPanel'>
+        <button>Screenshot</button>
+        <button onClick={handlePromptRelease}>Release Prompt</button>
+        <button>End</button>
+      </div>
     </div>
   );
 };

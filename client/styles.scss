@@ -69,6 +69,7 @@ p {
   @extend %room-component;
   grid-row: 2;
   grid-column: 2;
+  white-space: pre-line;
 }
 
 .InterviewerPanelContainer {

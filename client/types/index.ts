@@ -6,4 +6,9 @@ export interface CodeEditor {
   language: string;
 }
 
+export interface Prompt {
+  title: string;
+  text: string;
+}
+
 export type AppState = ReturnType<typeof rootReducer>;
