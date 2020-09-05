@@ -4,15 +4,18 @@ import { AppState } from '../types';
 import { Canvas } from './Canvas';
 import { CodeEditor } from '../components/CodeEditor';
 import { Prompt } from '../components/Prompt';
+import { InterviewerPanel } from '../components/InterviewerPanel';
 
 interface Props {
   socketSendMessage: (message: string) => void;
   socketSendCanvasUpdate: (message: string) => void;
   socketSendCodeUpdate: (data: any) => void;
+  socketSendPromptUpdate: (prompt: any) => void;
+  socketToggleTimer: () => void;
   room: string;
 }
 
-export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, socketSendCodeUpdate, room }) => {
+export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, socketSendCodeUpdate, socketSendPromptUpdate, socketToggleTimer, room }) => {
   const globalText: string = useSelector((state: AppState) => state.globalText);
   const [text, setText] = useState<string>('');
   const handleTextChange = (e: any) => {
@@ -33,6 +36,7 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
       <textarea className='TextEditor' value={text} onChange={handleTextChange}></textarea>
       <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
       <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
+      <InterviewerPanel socketSendPromptUpdate={socketSendPromptUpdate} socketToggleTimer={socketToggleTimer}/>
     </>
   );
 };

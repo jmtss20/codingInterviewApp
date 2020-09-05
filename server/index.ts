@@ -38,6 +38,14 @@ io.on('connection', (socket) => {
     socket.to(room).broadcast.emit('code-update', data);
   })
 
+  socket.on('send-prompt-update', (room, prompt) => {
+    socket.nsp.to(room).emit('prompt-update', prompt);
+  })
+
+  socket.on('send-timer-update', (room) => {
+    socket.nsp.to(room).emit('timer-update');
+  })
+
   socket.on('disconnect', () => {
     // future disconnecting logic
     console.log(`Client ${socket.id} left`)
