@@ -4,6 +4,7 @@ import { AppState } from '../types';
 import { Canvas } from './Canvas';
 import { CodeEditor } from '../components/CodeEditor';
 import { Prompt } from '../components/Prompt';
+import { InterviewerPanel } from '../components/InterviewerPanel';
 
 interface Props {
   socketSendMessage: (message: string) => void;
@@ -33,6 +34,7 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
       <textarea className='TextEditor' value={text} onChange={handleTextChange}></textarea>
       <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
       <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
+      <InterviewerPanel />
     </>
   );
 };
