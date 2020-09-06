@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 interface Props {
   socketSendPromptUpdate: (prompt: any) => void;
-  socketToggleTimer: () => void;
+  socketToggleTimer: (bool: boolean) => void;
 }
 
 export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, socketToggleTimer }) => {
@@ -16,7 +16,11 @@ export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, sock
 
   const handlePromptRelease = (e: any) => {
     socketSendPromptUpdate({ title: promptTitle, text: promptText });
-    socketToggleTimer();
+    socketToggleTimer(true);
+  }
+
+  const handlePromptEnd = (e: any) => {
+    socketToggleTimer(false);
   }
 
   return (
@@ -26,7 +30,7 @@ export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, sock
       <div className='InterviewerControlPanel'>
         <button>Screenshot</button>
         <button onClick={handlePromptRelease}>Release Prompt</button>
-        <button>End</button>
+        <button onClick={handlePromptEnd}>End</button>
       </div>
     </div>
   );

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import * as moment from 'moment';
+import 'moment-duration-format';
 import { useSelector } from 'react-redux';
 import { AppState } from '../types';
 import { Canvas } from './Canvas';
@@ -11,11 +13,12 @@ interface Props {
   socketSendCanvasUpdate: (message: string) => void;
   socketSendCodeUpdate: (data: any) => void;
   socketSendPromptUpdate: (prompt: any) => void;
-  socketToggleTimer: () => void;
+  socketToggleTimer: (bool: boolean) => void;
   room: string;
+  timer: number;
 }
 
-export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, socketSendCodeUpdate, socketSendPromptUpdate, socketToggleTimer, room }) => {
+export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, socketSendCodeUpdate, socketSendPromptUpdate, socketToggleTimer, room, timer }) => {
   const globalText: string = useSelector((state: AppState) => state.globalText);
   const [text, setText] = useState<string>('');
   const handleTextChange = (e: any) => {
@@ -30,7 +33,7 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
   return (
     <>
       <div className='HeaderContainer'>
-        <h3>ROOM: {room}</h3>
+        <h3>ROOM: {room} - TIME: {moment.duration(timer, 'seconds').format('h:mm:ss', {trim: false})}</h3>
       </div>
       <Prompt />
       <textarea className='TextEditor' value={text} onChange={handleTextChange}></textarea>

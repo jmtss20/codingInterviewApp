@@ -42,8 +42,8 @@ io.on('connection', (socket) => {
     socket.nsp.to(room).emit('prompt-update', prompt);
   })
 
-  socket.on('send-timer-update', (room) => {
-    socket.nsp.to(room).emit('timer-update');
+  socket.on('send-timer-update', (room, bool) => {
+    socket.nsp.to(room).emit('timer-update', bool);
   })
 
   socket.on('disconnect', () => {
