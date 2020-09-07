@@ -11,18 +11,21 @@ export const App: React.FC = () => {
   const dispatch = useDispatch();
   const [view, setView] = useState<string>('main');
   const [room, setRoom] = useState<string>('');
+  const [isTimerOn, toggleIsTimerOn] = useState<boolean>(false);
+  const [timer, setTimer] = useState<number>(0);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | number | null>(null);
   const socketSendMessage = (text: string) => socket.emit('send-chat-message', room, text);
   const socketSendCanvasUpdate = (text: string) => socket.emit('send-canvas-update', room, text);
   const socketSendCodeUpdate = (data: any) => socket.emit('send-code-update', room, data);
   const socketSendPromptUpdate = (prompt: any) => socket.emit('send-prompt-update', room, prompt);
-  const socketToggleTimer = () => socket.emit('send-timer-update', room);
+  const socketToggleTimer = (bool: boolean) => socket.emit('send-timer-update', room, bool);
 
   useEffect((): any => {
     socket.on('chat-message', (data: any) => dispatch(setGlobalText(data)));
     socket.on('canvas-update', (data: any) => dispatch(setGlobalContextData(data)));
     socket.on('code-update', (data: any) => dispatch(setCodeEditorData(data)));
     socket.on('prompt-update', (prompt: any) => dispatch(setPromptData(prompt)));
-    socket.on('timer-update', () => {console.log('ACTIVATE TIMER')}); //! TODO
+    socket.on('timer-update', (bool: boolean) => toggleIsTimerOn(bool));
     socket.on('user-joined-room', (data: any) => {
       console.log(data);
     });
@@ -32,6 +35,19 @@ export const App: React.FC = () => {
   useEffect(() => {
     if (room.length) socket.emit('join-room', room);
   }, [room]);
+
+  useEffect(() => {
+    let time = 0;
+    if (isTimerOn) {
+      setIntervalId(
+        setInterval(() => {
+          setTimer((time += 1));
+        }, 1000),
+      );
+    } else {
+      if (typeof intervalId === 'number') clearInterval(intervalId);
+    }
+  }, [isTimerOn]);
 
   return (
     <div className='AppContainer'>
@@ -43,7 +59,9 @@ export const App: React.FC = () => {
           socketSendCodeUpdate={socketSendCodeUpdate}
           socketSendPromptUpdate={socketSendPromptUpdate}
           socketToggleTimer={socketToggleTimer}
-          room={room} />
+          room={room}
+          timer={timer}
+        />
       )}
     </div>
   );
