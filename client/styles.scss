@@ -65,35 +65,18 @@ p {
   grid-column: 1 / span 5;
   width: 100%;
   height: 3rem;
-  border-bottom: .1rem solid #000;
+  border-bottom: $border;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
   justify-items: center;
 
-  h3 {
-    padding: 0;
-  }
-
-  .Logo {
-    grid-column: 1;
-  }
-
-  .Time {
-    grid-column: 3;
-  }
-
-  form {
-    grid-column: 4;
-  }
-
-  .CreateRoomBtn {
-    grid-column: 5;
-  }
-
-  .RoomName {
-    grid-column: 5;
-  }
+  h3 { padding: 0; }
+  .Logo { grid-column: 1; }
+  .Time { grid-column: 3; }
+  form { grid-column: 4; }
+  .CreateRoomBtn { grid-column: 5; }
+  .RoomName { grid-column: 5; }
 }
 
 .PromptContainer {
@@ -113,21 +96,10 @@ p {
   grid-template-rows: 1.5rem 1fr 6fr 1.5rem;
   grid-template-columns: 1fr;
 
-  .InterviewerNavBar {
-    grid-row: 1;
-  }
-
-  textarea:nth-child(0) {
-    grid-row: 2;
-  }
-
-  textarea:nth-child(1) {
-    grid-row: 3;
-  }
-
-  .InterviewerControlPanel {
-    grid-row: 4;
-  }
+  .InterviewerNavBar { grid-row: 1; }
+  textarea:nth-child(0) { grid-row: 2; }
+  textarea:nth-child(1) { grid-row: 3; }
+  .InterviewerControlPanel { grid-row: 4; }
 }
 
 .TextEditor {
