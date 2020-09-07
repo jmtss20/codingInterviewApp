@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setGlobalText, setGlobalContextData, setCodeEditorData, setPromptData } from './actions';
 import { Room } from './components/Room';
-import { Main } from './components/Main';
+import { Header } from './components/Header';
+import { InterviewerPanel } from './components/InterviewerPanel';
+
 import socketIOClient from 'socket.io-client';
 const ENDPOINT = 'http://127.0.0.1:80';
 const socket = socketIOClient(ENDPOINT);
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
-  const [view, setView] = useState<string>('main');
-  const [room, setRoom] = useState<string>('');
+  const [mode, setMode] = useState<string>('interviewee');
+  const [room, setSocketsRoom] = useState<string>('');
   const [isTimerOn, toggleIsTimerOn] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(0);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | number | null>(null);
@@ -51,17 +53,14 @@ export const App: React.FC = () => {
 
   return (
     <div className='AppContainer'>
-      {!!(view === 'main') && <Main setView={setView} assignRoom={setRoom} />}
-      {!!(view === 'room') && (
-        <Room
-          socketSendMessage={socketSendMessage}
-          socketSendCanvasUpdate={socketSendCanvasUpdate}
-          socketSendCodeUpdate={socketSendCodeUpdate}
-          socketSendPromptUpdate={socketSendPromptUpdate}
-          socketToggleTimer={socketToggleTimer}
-          room={room}
-          timer={timer}
-        />
+      <Header setMode={setMode} setSocketsRoom={setSocketsRoom} room={room} timer={timer}/>
+      <Room
+        socketSendMessage={socketSendMessage}
+        socketSendCanvasUpdate={socketSendCanvasUpdate}
+        socketSendCodeUpdate={socketSendCodeUpdate}
+      />
+      {!!(mode === 'interviewer') && (
+        <InterviewerPanel socketSendPromptUpdate={socketSendPromptUpdate} socketToggleTimer={socketToggleTimer} />
       )}
     </div>
   );

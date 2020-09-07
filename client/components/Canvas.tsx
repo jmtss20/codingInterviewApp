@@ -8,7 +8,7 @@ type Coordinates = {
 };
 
 interface Props {
-  socketSendCanvasUpdate: (val: any) => void;
+  socketSendCanvasUpdate: (url: any) => void;
 }
 
 export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
