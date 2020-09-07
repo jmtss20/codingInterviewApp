@@ -25,8 +25,13 @@ export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, sock
 
   return (
     <div className='InterviewerPanelContainer'>
-      <textarea id='title' value={promptTitle} placeholder='Title' onChange={handlePromptChange}></textarea>
-      <textarea id='text' value={promptText} placeholder='Text' onChange={handlePromptChange}></textarea>
+      <div className='InterviewerNavBar'>
+        <button>Prompt</button>
+        <button>Notes</button>
+        <button>Tools</button>
+      </div>
+      <textarea id='title' value={promptTitle} placeholder='Enter prompt title' onChange={handlePromptChange}></textarea>
+      <textarea id='text' value={promptText} placeholder='Enter prompt text' onChange={handlePromptChange}></textarea>
       <div className='InterviewerControlPanel'>
         <button>Screenshot</button>
         <button onClick={handlePromptRelease}>Release Prompt</button>
