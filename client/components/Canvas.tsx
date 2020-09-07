@@ -8,10 +8,11 @@ type Coordinates = {
 };
 
 interface Props {
-  socketSendCanvasUpdate: (val: any) => void;
+  socketSendCanvasUpdate: (url: any) => void;
+  room: string;
 }
 
-export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
+export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate, room }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [dimensions, setDimensions] = useState<{ [key: string]: any}>({width: 500, height: 300});
@@ -109,7 +110,7 @@ export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
         canvasRef.current.removeEventListener('mousemove', handleMouseMove);
       }
     };
-  }, [context]);
+  }, [context, room]);
 
   return (
     <div className='CanvasContainer'>
