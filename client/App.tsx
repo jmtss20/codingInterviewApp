@@ -58,6 +58,7 @@ export const App: React.FC = () => {
         socketSendMessage={socketSendMessage}
         socketSendCanvasUpdate={socketSendCanvasUpdate}
         socketSendCodeUpdate={socketSendCodeUpdate}
+        room={room}
       />
       {!!(mode === 'interviewer') && (
         <InterviewerPanel socketSendPromptUpdate={socketSendPromptUpdate} socketToggleTimer={socketToggleTimer} />

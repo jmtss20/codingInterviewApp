@@ -9,9 +9,10 @@ interface Props {
   socketSendMessage: (message: string) => void;
   socketSendCanvasUpdate: (url: string) => void;
   socketSendCodeUpdate: (data: any) => void;
+  room: string;
 }
 
-export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, socketSendCodeUpdate }) => {
+export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdate, socketSendCodeUpdate, room }) => {
   const globalText: string = useSelector((state: AppState) => state.globalText);
   const [text, setText] = useState<string>('');
   const handleTextChange = (e: any) => {
@@ -28,7 +29,7 @@ export const Room: React.FC<Props> = ({ socketSendMessage, socketSendCanvasUpdat
       <Prompt />
       <textarea className='TextEditor' value={text} onChange={handleTextChange}></textarea>
       <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
-      <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
+      <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} room={room}/>
     </>
   );
 };
