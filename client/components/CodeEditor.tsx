@@ -11,7 +11,7 @@ export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
   const codeEditorData: any = useSelector((state: AppState) => state.codeEditorData);
   const [dimensions, setDimensions] = useState<{ [key: string]: any }>({ width: 500, height: 300 });
   const [value, setValue] = useState('// Write code here');
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
   const [language, setLanguage] = useState('javascript');
   const [isEditorReady, setIsEditorReady] = useState(false);
   const languages = [
