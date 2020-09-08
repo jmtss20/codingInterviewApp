@@ -5,6 +5,7 @@ import path from 'path';
 import http from 'http';
 import socketIo from 'socket.io';
 import { router } from './router';
+import { rooms } from './data';
 
 const PORT = process.env.PORT || 80;
 const app: Application = express();
@@ -20,38 +21,46 @@ const io = socketIo(server);
 
 // SOCKETS LOGIC -----------------------------
 io.on('connection', (socket) => {
-
   socket.on('join-room', (room) => {
     socket.to(room).broadcast.emit('user-joined-room', `Client ${socket.id} joined the room`);
     socket.join(room);
-  })
+    rooms[room]['users'] ? (rooms[room]['users'][socket.id] = true) : (rooms[room]['users'] = { [socket.id]: true });
+  });
 
-  socket.on('send-chat-message', (room, message) => {
-    socket.to(room).broadcast.emit('chat-message', message);
-  })
+  socket.on('send-text-update', (room, text) => {
+    socket.to(room).broadcast.emit('text-update', text);
+    rooms[room]['textEditor'] = text;
+  });
 
   socket.on('send-canvas-update', (room, url) => {
     socket.to(room).broadcast.emit('canvas-update', url);
-  })
+    rooms[room]['whiteboard'] = url;
+  });
 
   socket.on('send-code-update', (room, data) => {
     socket.to(room).broadcast.emit('code-update', data);
-  })
+    rooms[room]['codeEditor'] = data;
+  });
 
   socket.on('send-prompt-update', (room, prompt) => {
     socket.nsp.to(room).emit('prompt-update', prompt);
-  })
+    rooms[room]['prompt'] = prompt;
+  });
 
   socket.on('send-timer-update', (room, bool) => {
     socket.nsp.to(room).emit('timer-update', bool);
-  })
+  });
 
   socket.on('disconnect', () => {
-    // future disconnecting logic
-    console.log(`Client ${socket.id} left`)
-  })
-
-})
+    Object.entries(rooms).forEach((row: any) => {
+      if (!!row[1]['users'][socket.id]) {
+        socket.to(row[0]).broadcast.emit('user-left-room', `Client ${socket.id} left the room`);
+        delete rooms[row[0]]['users'][socket.id];
+        if (!Object.keys(rooms[row[0]]['users']).length) delete rooms[row[0]];
+      }
+    });
+  });
+});
 // ---------------------------------------------
 
 server.listen(PORT, () => console.log(`Listening on port ${PORT}`));

@@ -1,4 +1,4 @@
-const rooms: any = {}; // keep in controllers or move elsewhere ?
+import { rooms } from './data';
 
 export const controllers = {
   joinRoom: (req: any, res: any) => {
@@ -12,7 +12,7 @@ export const controllers = {
     if (rooms[req.body.newRoom]) {
       res.sendStatus(404);
     }
-    rooms[req.body.newRoom] = { data: [] };
+    rooms[req.body.newRoom] = {};
     res.sendStatus(200);
-  }
-}
+  },
+};
