@@ -21,6 +21,7 @@ export const App: React.FC = () => {
   const socketSendCodeUpdate = (data: any) => room.length ? socket.emit('send-code-update', room, data) : null;
   const socketSendPromptUpdate = (prompt: any) => socket.emit('send-prompt-update', room, prompt);
   const socketToggleTimer = (bool: boolean) => socket.emit('send-timer-update', room, bool);
+  const socketSentNotesUpdate = (text: string) => socket.emit('send-notes-update', room, text);
 
   useEffect((): any => {
     socket.on('text-update', (data: any) => dispatch(setGlobalText(data)));
@@ -61,7 +62,7 @@ export const App: React.FC = () => {
           room={room}
         />
         {!!(mode === 'interviewer') && (
-          <InterviewerPanel socketSendPromptUpdate={socketSendPromptUpdate} socketToggleTimer={socketToggleTimer} />
+          <InterviewerPanel socketSendPromptUpdate={socketSendPromptUpdate} socketToggleTimer={socketToggleTimer} socketSentNotesUpdate={socketSentNotesUpdate} />
         )}
       </div>
     </div>
