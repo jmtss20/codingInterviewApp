@@ -51,6 +51,10 @@ io.on('connection', (socket) => {
     socket.nsp.to(room).emit('timer-update', bool);
   });
 
+  socket.on('send-notes-update', (room, text) => {
+    rooms[room]['notes'] = text;
+  });
+
   socket.on('disconnect', () => {
     Object.entries(rooms).forEach((row: any) => {
       if (!!row[1]['users'][socket.id]) {
