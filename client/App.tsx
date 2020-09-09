@@ -52,16 +52,18 @@ export const App: React.FC = () => {
 
   return (
     <div className='AppContainer'>
-      <Header setMode={setMode} setSocketsRoom={setSocketsRoom} room={room} timer={timer}/>
-      <Room
-        socketSendMessage={socketSendMessage}
-        socketSendCanvasUpdate={socketSendCanvasUpdate}
-        socketSendCodeUpdate={socketSendCodeUpdate}
-        room={room}
-      />
-      {!!(mode === 'interviewer') && (
-        <InterviewerPanel socketSendPromptUpdate={socketSendPromptUpdate} socketToggleTimer={socketToggleTimer} />
-      )}
+      <Header setMode={setMode} setSocketsRoom={setSocketsRoom} room={room} timer={timer} />
+      <div className='RoomContainer'>
+        <Room
+          socketSendMessage={socketSendMessage}
+          socketSendCanvasUpdate={socketSendCanvasUpdate}
+          socketSendCodeUpdate={socketSendCodeUpdate}
+          room={room}
+        />
+        {!!(mode === 'interviewer') && (
+          <InterviewerPanel socketSendPromptUpdate={socketSendPromptUpdate} socketToggleTimer={socketToggleTimer} />
+        )}
+      </div>
     </div>
   );
 };

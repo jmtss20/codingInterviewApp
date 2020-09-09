@@ -1,45 +1,53 @@
 // GLOBAL VARIABLES
 // --------------------------
-// Seperate into another file
-// --------------------------
-$dark-mode-text: #fff;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+$dark-mode-text: #ffffff;
 $dark-mode-bg1: #202124;
 $dark-mode-bg2: #1e1e1e;
 $dark-mode-border: #b9b9b9;
 
-$light-mode-text: #000;
-$light-mode-bg: #fff;
-$light-mode-border: #000000;
+$light-mode-text: #212121;
+$light-mode-bg: #fafafa;
+$light-mode-block: #ffffff;
+$light-mode-border: #eeeeee;
 
 $text-color: $light-mode-text;
 $bg-color: $light-mode-bg;
-$border: .1rem solid $light-mode-border;
+$block-color: $light-mode-block;
+$border: 0.1rem solid $light-mode-border;
 
-$border-radius: .2rem;
+$border-radius: 0.2rem;
 $padding: 1rem;
-$room-component-width: 22rem;
-$room-component-height: 15rem;
+$room-component-width: 28rem;
+$room-component-height: 20rem;
 
 body {
+  font-family: 'Roboto', sans-serif;
   background-color: $bg-color;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $text-color;
-  background-color: $bg-color;
   padding-bottom: $padding;
   margin: 0;
 }
 
 p {
   color: $text-color;
-  background-color: $bg-color;
   margin: 0;
 }
 
 %room-component {
+  background-color: $block-color;
   width: $room-component-width;
   height: $room-component-height;
   border: $border;
@@ -47,81 +55,106 @@ p {
   border-radius: $border-radius;
 }
 
-// COMPONENT SPECIFIC
-// --------------------------
-// Seperate into another file
+// COMPONENT VARIABLES
 // --------------------------
 .AppContainer {
   display: grid;
   justify-items: center;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 3rem 1fr 1fr;
-  grid-gap: .3rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 3rem 1fr;
+  grid-gap: 0.5rem;
+}
+
+.RoomContainer {
+  grid-row: 2;
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(autofill, $room-component-width);
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 0.5rem;
 }
 
 .HeaderContainer {
-  grid-row: 1;
-  grid-column: 1 / span 5;
+  background-color: $block-color;
   width: 100%;
   height: 3rem;
+  grid-row: 1;
+  grid-column: 1 / span 3;
   border-bottom: $border;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
   justify-items: center;
 
-  h3 { padding: 0; }
-  .Logo { grid-column: 1; }
-  .Time { grid-column: 3; }
-  form { grid-column: 4; }
-  .CreateRoomBtn { grid-column: 5; }
-  .RoomName { grid-column: 5; }
+  h3 {
+    padding: 0;
+  }
+  .Logo {
+    grid-column: 1;
+  }
+  .Time {
+    grid-column: 3;
+  }
+  form {
+    font-family: 'Roboto', sans-serif;
+    grid-column: 4;
+  }
+  .CreateRoomBtn {
+    grid-column: 5;
+  }
+  .RoomName {
+    grid-column: 5;
+  }
 }
 
 .PromptContainer {
   @extend %room-component;
-  grid-row: 2;
-  grid-column: 2;
+  grid-row: 1;
+  grid-column: 1;
   white-space: pre-line;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .InterviewerPanelContainer {
   @extend %room-component;
-  height: ($room-component-height + $padding) * 2 + .7rem;
-  grid-row: 2 / span 2;
-  grid-column: 4;
+  height: $room-component-height * 2;
+  grid-row: 1 / span 2;
+  grid-column: 3;
   display: grid;
   grid-template-rows: 1.5rem 1fr 6fr 1.5rem;
   grid-template-columns: 1fr;
 
-  .InterviewerNavBar { grid-row: 1; }
-  textarea:nth-child(0) { grid-row: 2; }
-  textarea:nth-child(1) { grid-row: 3; }
-  .InterviewerControlPanel { grid-row: 4; }
+  .InterviewerNavBar {
+    grid-row: 1;
+  }
+  textarea:nth-child(0) {
+    grid-row: 2;
+  }
+  textarea:nth-child(1) {
+    grid-row: 3;
+  }
+  .InterviewerControlPanel {
+    grid-row: 4;
+  }
 }
 
 .TextEditor {
   @extend %room-component;
-  grid-row: 2;
-  grid-column: 3;
+  grid-row: 1;
+  grid-column: 2;
 }
 
 .CodeEditorContainer {
-  grid-row: 3;
-  grid-column: 3;
+  @extend %room-component;
+  grid-row: 2;
+  grid-column: 2;
   display: grid;
-  grid-template-rows: .7rem 1fr 1.5rem .5rem;
-  grid-template-columns: 1fr 5rem .5rem;
-  width: $room-component-width + $padding * 2;
-  height: $room-component-height + $padding * 2;
-  border: $border;
-  border-radius: $border-radius;
-  background-color: $bg-color;
+  grid-template-rows: 0.7rem 1fr 1.5rem 0.5rem;
+  grid-template-columns: 1fr 5rem 0.5rem;
 
   button {
-    //! TO DELTE LATER SINCE WON'T HAVE A BUTTON
+    font-family: 'Roboto', sans-serif;
     z-index: 10;
     grid-row: 3;
     grid-column: 1;
@@ -138,19 +171,18 @@ p {
   .CodeEditor {
     grid-row: 2 / span 2;
     grid-column: 1 / span 3;
-    width: $room-component-width + $padding * 2;
-    height: $room-component-height + $padding;
+    width: 100%;
+    height: 100%;
   }
 }
 
 .CanvasContainer {
-  grid-row: 3;
-  grid-column: 2;
+  @extend %room-component;
+  grid-row: 2;
+  grid-column: 1;
 
   canvas {
-    border: $border;
-    border-radius: $border-radius;
-    width: $room-component-width + $padding * 2;
-    height: $room-component-height + $padding * 2;
+    width: 100%;
+    height: 100%;
   }
 }

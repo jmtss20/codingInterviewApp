@@ -43,7 +43,7 @@ export const Header: React.FC<Props> = ({ setMode, setSocketsRoom, room, timer }
 
   return (
     <div className='HeaderContainer'>
-      <h3 className='Logo'>CODING INTERVIEW APP</h3>
+      <h3 className='Logo'>Board.ly</h3>
       {!!room && <h3 className='Time'>{moment.duration(timer, 'seconds').format('h:mm:ss', { trim: false })}</h3>}
       {!room ? (
         <>
