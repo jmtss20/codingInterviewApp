@@ -16,9 +16,9 @@ export const App: React.FC = () => {
   const [isTimerOn, toggleIsTimerOn] = useState<boolean>(false);
   const [timer, setTimer] = useState<number>(0);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | number | null>(null);
-  const socketSendMessage = (text: string) => socket.emit('send-text-update', room, text);
-  const socketSendCanvasUpdate = (text: string) => socket.emit('send-canvas-update', room, text);
-  const socketSendCodeUpdate = (data: any) => socket.emit('send-code-update', room, data);
+  const socketSendTextUpdate = (text: string) => room.length ? socket.emit('send-text-update', room, text) : null;
+  const socketSendCanvasUpdate = (text: string) => room.length ? socket.emit('send-canvas-update', room, text) : null;
+  const socketSendCodeUpdate = (data: any) => room.length ? socket.emit('send-code-update', room, data) : null;
   const socketSendPromptUpdate = (prompt: any) => socket.emit('send-prompt-update', room, prompt);
   const socketToggleTimer = (bool: boolean) => socket.emit('send-timer-update', room, bool);
 
@@ -55,7 +55,7 @@ export const App: React.FC = () => {
       <Header setMode={setMode} setSocketsRoom={setSocketsRoom} room={room} timer={timer} />
       <div className='RoomContainer'>
         <Room
-          socketSendMessage={socketSendMessage}
+          socketSendTextUpdate={socketSendTextUpdate}
           socketSendCanvasUpdate={socketSendCanvasUpdate}
           socketSendCodeUpdate={socketSendCodeUpdate}
           room={room}
