@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 
 interface Props {
   socketSendPromptUpdate: (prompt: any) => void;
-  socketToggleTimer: (bool: boolean) => void;
+  socketToggleSessionStatus: (bool: boolean) => void;
   socketSentNotesUpdate: (text: string) => void;
 }
 
-export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, socketToggleTimer, socketSentNotesUpdate }) => {
+export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, socketToggleSessionStatus, socketSentNotesUpdate }) => {
   const [view, setView] = useState<string>('prompt');
   const [promptTitle, setPromptTitle] = useState('');
   const [promptText, setPromptText] = useState('');
@@ -23,11 +23,11 @@ export const InterviewerPanel: React.FC<Props> = ({ socketSendPromptUpdate, sock
 
   const handlePromptRelease = (e: any) => {
     socketSendPromptUpdate({ title: promptTitle, text: promptText });
-    socketToggleTimer(true);
+    socketToggleSessionStatus(true);
   };
 
   const handlePromptEnd = (e: any) => {
-    socketToggleTimer(false);
+    socketToggleSessionStatus(false);
   };
 
   return (

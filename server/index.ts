@@ -47,8 +47,8 @@ io.on('connection', (socket) => {
     rooms[room]['prompt'] = prompt;
   });
 
-  socket.on('send-timer-update', (room, bool) => {
-    socket.nsp.to(room).emit('timer-update', bool);
+  socket.on('send-session-update', (room, bool) => {
+    socket.nsp.to(room).emit('session-update', bool);
   });
 
   socket.on('send-notes-update', (room, text) => {

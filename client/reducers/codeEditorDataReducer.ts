@@ -1,7 +1,7 @@
 import { AppActions } from '../types/actions';
 import { CodeEditor } from '../types';
 
-const codeEditorDataReducer = (state = { value: '', language: 'javascript' }, action: AppActions): CodeEditor => {
+export const codeEditorDataReducer = (state = { value: '', language: 'javascript' }, action: AppActions): CodeEditor => {
   switch (action.type) {
     case 'SET_CODE_EDITOR_DATA':
       return action.payload;
@@ -9,5 +9,3 @@ const codeEditorDataReducer = (state = { value: '', language: 'javascript' }, ac
       return state;
   }
 };
-
-export default codeEditorDataReducer;

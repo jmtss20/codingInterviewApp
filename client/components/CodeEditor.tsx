@@ -9,6 +9,8 @@ interface Props {
 
 export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
   const codeEditorData: any = useSelector((state: AppState) => state.codeEditorData);
+  const sessionStatus: boolean = useSelector((state: AppState) => state.sessionStatus);
+  const room: string = useSelector((state: AppState) => state.room);
   const [dimensions, setDimensions] = useState<{ [key: string]: any }>({ width: 500, height: 300 });
   const [value, setValue] = useState('// Write code here');
   const [theme, setTheme] = useState('light');
@@ -37,8 +39,10 @@ export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
     socketSendCodeUpdate({ value, language: e.target.value });
   };
   const handleEditorChange = (e: any, value: string) => {
-    setValue(value);
-    socketSendCodeUpdate({ value, language });
+    if (!!room && sessionStatus) {
+      setValue(value);
+      socketSendCodeUpdate({ value, language });
+    }
   };
 
   useEffect(() => {
@@ -60,11 +64,12 @@ export const CodeEditor: React.FC<Props> = ({ socketSendCodeUpdate }) => {
       <button onClick={toggleTheme} disabled={!isEditorReady}>
         {theme} mode
       </button>
-      <select disabled={!isEditorReady} value={language} onChange={selectLanguage}>
+      <select disabled={!isEditorReady || (!!room && !sessionStatus)} value={language} onChange={selectLanguage}>
         {languages.map((lng) => (
           <option value={`${lng}`}>{lng}</option>
         ))}
       </select>
+      {!!room && !sessionStatus && <div id='disabledEditor' className='CodeEditor' style={{ zIndex: 10 }}></div>}
       <div className='CodeEditor'>
         <ControlledEditor
           width={dimensions.width}

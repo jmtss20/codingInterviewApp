@@ -9,6 +9,8 @@ const initialState = {
   globalText: '',
   globalContextData: '',
   codeEditorData: { value: '', language: 'javascript' },
+  sessionStatus: false,
+  room: '',
 }
 
 export const store = createStore(

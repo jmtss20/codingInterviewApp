@@ -1,8 +1,8 @@
 import { AppActions } from '../types/actions';
 
-export const globalTextReducer = (state = '', action: AppActions): string => {
+export const roomReducer = (state = '', action: AppActions): string => {
   switch (action.type) {
-    case 'SET_GLOBAL_TEXT':
+    case 'SET_ROOM':
       return action.payload;
     default:
       return state;

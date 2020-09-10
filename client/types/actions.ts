@@ -20,4 +20,14 @@ interface PromptData {
   payload: Prompt;
 }
 
-export type AppActions = GlobalTextAction | GlobalContextDataAction | CodeEditorData | PromptData;
+interface SessionStatus {
+  type: 'SET_SESSION_STATUS';
+  payload: boolean;
+}
+
+interface Room {
+  type: 'SET_ROOM';
+  payload: string;
+}
+
+export type AppActions = GlobalTextAction | GlobalContextDataAction | CodeEditorData | PromptData | SessionStatus | Room;

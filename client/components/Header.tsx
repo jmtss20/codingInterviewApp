@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRoom } from '../actions';
+import { AppState } from '../types';
 /* @ts-ignore  */
 import randomWords from 'random-words';
 import * as moment from 'moment';
@@ -7,13 +10,13 @@ import axios from 'axios';
 
 interface Props {
   setMode: (mode: string) => void;
-  setSocketsRoom: (room: string) => void;
-  room: string;
   timer: number;
 }
 
-export const Header: React.FC<Props> = ({ setMode, setSocketsRoom, room, timer }) => {
+export const Header: React.FC<Props> = ({ setMode, timer }) => {
+  const dispatch = useDispatch();
   const [text, setText] = useState('');
+  const room: string = useSelector((state: AppState) => state.room);
 
   const createRoom = () => {
     const newRoom = randomWords({ exactly: 2, join: '', maxLength: 4 });
@@ -26,13 +29,13 @@ export const Header: React.FC<Props> = ({ setMode, setSocketsRoom, room, timer }
       });
   };
 
-  const joinRoom = (e: any, room: string) => {
+  const joinRoom = (e: any, newRoom: string) => {
     e ? e.preventDefault() : null;
-    if (room) {
+    if (newRoom) {
       axios
-        .get(`/${room}`)
+        .get(`/${newRoom}`)
         .then(({ data }) => {
-          if (data) setSocketsRoom(room);
+          if (data) dispatch(setRoom(data));
         })
         .catch((err) => {
           alert('Room does not exist');
@@ -51,9 +54,13 @@ export const Header: React.FC<Props> = ({ setMode, setSocketsRoom, room, timer }
             <input value={text} onChange={(e) => setText(e.target.value)}></input>
             <button onClick={(e) => joinRoom(e, text)}>Join Room</button>
           </form>
-          <button className='CreateRoomBtn' onClick={createRoom}>Create Room</button>
+          <button className='CreateRoomBtn' onClick={createRoom}>
+            Create Room
+          </button>
         </>
-      ) : <h3 className='RoomName'>ROOM: {room}</h3>}
+      ) : (
+        <h3 className='RoomName'>ROOM: {room}</h3>
+      )}
     </div>
   );
 };
