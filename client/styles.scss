@@ -112,7 +112,7 @@ p {
   @extend %room-component;
   grid-row: 1;
   grid-column: 1;
-  white-space: pre-line;
+  white-space: pre;
   overflow: scroll;
 }
 
