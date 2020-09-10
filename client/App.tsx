@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGlobalText, setGlobalContextData, setCodeEditorData, setPromptData, setSessionStatus, setRoom } from './actions';
+import {
+  setGlobalText,
+  setGlobalContextData,
+  setCodeEditorData,
+  setPromptData,
+  setSessionStatus
+} from './actions';
 import { AppState } from './types';
 import { Room } from './components/Room';
 import { Header } from './components/Header';
@@ -15,7 +21,6 @@ export const App: React.FC = () => {
   const sessionStatus: boolean = useSelector((state: AppState) => state.sessionStatus);
   const room: string = useSelector((state: AppState) => state.room);
   const [mode, setMode] = useState<string>('interviewee');
-
   const [timer, setTimer] = useState<number>(0);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | number | null>(null);
   const socketSendTextUpdate = (text: string) => (!!room ? socket.emit('send-text-update', room, text) : null);

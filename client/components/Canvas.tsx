@@ -14,7 +14,7 @@ interface Props {
 export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-  const [dimensions, setDimensions] = useState<{ [key: string]: any}>({width: 500, height: 300});
+  const [dimensions, setDimensions] = useState<{ [key: string]: any }>({ width: 500, height: 300 });
   const globalContextData: string = useSelector((state: AppState) => state.globalContextData);
   const sessionStatus: boolean = useSelector((state: AppState) => state.sessionStatus);
   const room: string = useSelector((state: AppState) => state.room);
@@ -24,7 +24,7 @@ export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
     const height = document.getElementById('canvas').clientHeight;
     /* @ts-ignore  */
     const width = document.getElementById('canvas').clientWidth;
-    setDimensions({width,height})
+    setDimensions({ width, height });
   }, [context]);
 
   useEffect(() => {

@@ -54,9 +54,13 @@ export const Header: React.FC<Props> = ({ setMode, timer }) => {
             <input value={text} onChange={(e) => setText(e.target.value)}></input>
             <button onClick={(e) => joinRoom(e, text)}>Join Room</button>
           </form>
-          <button className='CreateRoomBtn' onClick={createRoom}>Create Room</button>
+          <button className='CreateRoomBtn' onClick={createRoom}>
+            Create Room
+          </button>
         </>
-      ) : <h3 className='RoomName'>ROOM: {room}</h3>}
+      ) : (
+        <h3 className='RoomName'>ROOM: {room}</h3>
+      )}
     </div>
   );
 };
