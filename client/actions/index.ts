@@ -20,3 +20,13 @@ export const setPromptData = (data: Prompt): AppActions => ({
   type: 'SET_PROMPT_DATA',
   payload: data,
 });
+
+export const setSessionStatus = (status: boolean): AppActions => ({
+  type: 'SET_SESSION_STATUS',
+  payload: status,
+});
+
+export const setRoom = (room: string): AppActions => ({
+  type: 'SET_ROOM',
+  payload: room,
+});

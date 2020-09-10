@@ -9,14 +9,15 @@ type Coordinates = {
 
 interface Props {
   socketSendCanvasUpdate: (url: any) => void;
-  room: string;
 }
 
-export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate, room }) => {
+export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const [dimensions, setDimensions] = useState<{ [key: string]: any}>({width: 500, height: 300});
   const globalContextData: string = useSelector((state: AppState) => state.globalContextData);
+  const sessionStatus: boolean = useSelector((state: AppState) => state.sessionStatus);
+  const room: string = useSelector((state: AppState) => state.room);
 
   useEffect(() => {
     /* @ts-ignore  */
@@ -67,7 +68,7 @@ export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate, room }) => {
     }
 
     function handleMouseMove(evt: MouseEvent) {
-      if (mouseDown && context) {
+      if (mouseDown && context && !(!!room && !sessionStatus)) {
         start = {
           x: end.x,
           y: end.y,
@@ -110,7 +111,7 @@ export const Canvas: React.FC<Props> = ({ socketSendCanvasUpdate, room }) => {
         canvasRef.current.removeEventListener('mousemove', handleMouseMove);
       }
     };
-  }, [context, room]);
+  }, [context, room, sessionStatus]);
 
   return (
     <div className='CanvasContainer'>

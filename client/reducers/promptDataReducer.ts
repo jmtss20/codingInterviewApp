@@ -1,7 +1,7 @@
 import { AppActions } from '../types/actions';
 import { Prompt } from '../types';
 
-const promptDataReducer = (state = { title: '', text: '' }, action: AppActions): Prompt => {
+export const promptDataReducer = (state = { title: '', text: '' }, action: AppActions): Prompt => {
   switch (action.type) {
     case 'SET_PROMPT_DATA':
       return action.payload;
@@ -9,5 +9,3 @@ const promptDataReducer = (state = { title: '', text: '' }, action: AppActions):
       return state;
   }
 };
-
-export default promptDataReducer;
