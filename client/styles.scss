@@ -48,8 +48,8 @@ p {
 
 %room-component {
   background-color: $block-color;
-  width: $room-component-width;
-  height: $room-component-height;
+  min-width: $room-component-width;
+  min-height: $room-component-height;
   border: $border;
   padding: $padding;
   border-radius: $border-radius;
@@ -71,8 +71,34 @@ p {
   grid-column: 2;
   display: grid;
   grid-template-columns: repeat(autofill, $room-component-width);
+  grid-template-rows: 1fr;
+  grid-gap: 0.5rem;
+}
+
+.column1 {
+  grid-row: 1;
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 0.5rem;
+  overflow: hidden;
+  width: $room-component-width + 3rem;
+  resize: both;
+}
+
+.column2 {
+  grid-row: 1;
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 0.5rem;
+  overflow: hidden;
+  width: $room-component-width + 3rem;
+  resize: both;
+  z-index: 20;
+  background: url(http://merchantmomphotoeditor.com/pixenate/docs/resize_handle2.gif) 100% 100% no-repeat;
 }
 
 .HeaderContainer {
@@ -108,6 +134,7 @@ p {
   }
 }
 
+
 .PromptContainer {
   @extend %room-component;
   grid-row: 1;
@@ -124,9 +151,14 @@ p {
   display: grid;
   grid-template-rows: 1.5rem 1fr 6fr 1.5rem;
   grid-template-columns: 1fr;
+  overflow: hidden;
+  resize: both;
 
   .InterviewerNavBar {
     grid-row: 1;
+  }
+  textarea {
+    resize: none;
   }
   textarea:nth-child(0) {
     grid-row: 2;
@@ -142,13 +174,14 @@ p {
 .TextEditor {
   @extend %room-component;
   grid-row: 1;
-  grid-column: 2;
+  grid-column: 1;
+  resize: none;
 }
 
 .CodeEditorContainer {
   @extend %room-component;
   grid-row: 2;
-  grid-column: 2;
+  grid-column: 1;
   display: grid;
   grid-template-rows: 0.7rem 1fr 1.5rem 0.5rem;
   grid-template-columns: 1fr 5rem 0.5rem;
@@ -174,6 +207,7 @@ p {
     width: 100%;
     height: 100%;
   }
+
 }
 
 .CanvasContainer {
