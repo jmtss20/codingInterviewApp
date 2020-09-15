@@ -27,10 +27,14 @@ export const Room: React.FC<Props> = ({ socketSendTextUpdate, socketSendCanvasUp
 
   return (
     <>
-      <Prompt />
-      <textarea className='TextEditor' value={text} onChange={handleTextChange} disabled={!!room && !sessionStatus}></textarea>
-      <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
-      <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
+      <div className="column1">
+        <Prompt />
+        <Canvas socketSendCanvasUpdate={socketSendCanvasUpdate} />
+      </div>
+      <div className="column2">
+        <textarea className='TextEditor' value={text} onChange={handleTextChange} disabled={!!room && !sessionStatus}></textarea>
+        <CodeEditor socketSendCodeUpdate={socketSendCodeUpdate} />
+      </div>
     </>
   );
 };
