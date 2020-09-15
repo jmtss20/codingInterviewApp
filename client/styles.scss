@@ -152,7 +152,7 @@ p {
   grid-template-rows: 1.5rem 1fr 6fr 1.5rem;
   grid-template-columns: 1fr;
   overflow: hidden;
-  resize: horizontal;
+  resize: both;
 
   .InterviewerNavBar {
     grid-row: 1;
